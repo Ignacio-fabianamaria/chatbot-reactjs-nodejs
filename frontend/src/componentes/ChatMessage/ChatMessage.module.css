@@ -1,15 +1,17 @@
 .message_right {
-    background: #91fbff;
+    background: #ceeff0;
     border-radius: 25px;
-    padding: .5em 1em !important;
-    margin: 1em;
+    padding: 0.2rem 0.8rem;
+    margin: 0.2rem;
+    
   }
   
-  .message_left{
+  .message_left {
     background: aliceblue;
     border-radius: 25px;
-    padding: .5em 1em !important;
-    margin: 1em;
+    padding: 0.2rem 0.8rem;
+    margin: 0.2rem;
+    
   }
   
   .message_text {
@@ -17,6 +19,7 @@
   }
   
   .message_icon {
-    font-size: 25px;
+    font-size: 20px;
     margin: 8px;
   }
+  

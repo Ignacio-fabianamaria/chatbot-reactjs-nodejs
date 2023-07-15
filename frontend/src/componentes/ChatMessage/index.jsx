@@ -4,15 +4,15 @@ import { ChatDots, Person } from 'react-bootstrap-icons';
 
 export default function ChatMessage(props) {
   return (
-    <div className={`d-flex ${props.user ? 'justify-content-end' : ''}`} >
+    <div className={`d-flex ${props.user ?  'justify-content-end' : ''}`} >
         {
         props.user ? (
-          <span className={styles.message_rigth} >
-            <span className={styles.message_text} >{props.message}</span>
+          <span className={styles.message_right} >
             <Person className={styles.message_icon} />
+            <span className={styles.message_text} >{props.message}</span>
           </span>
         ) : (
-          <span>
+          <span className={styles.message_left}>
             <ChatDots className={styles.message_icon} />
             <span className={styles.message_text}>{props.message}</span>
           </span>

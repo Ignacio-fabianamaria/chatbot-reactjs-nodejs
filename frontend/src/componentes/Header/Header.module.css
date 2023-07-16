@@ -1,0 +1,13 @@
+.header {
+    padding: 1em;
+    margin: 2em;
+    
+}
+
+.form_login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+

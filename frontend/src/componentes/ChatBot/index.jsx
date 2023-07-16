@@ -3,6 +3,7 @@ import { analyze } from "../../utils/analyze";
 import { Button } from "react-bootstrap";
 import styles from "./ChatBot.module.css";
 import ChatMessage from "../ChatMessage";
+import Header from "../Header";
 
 export default function ChatBot() {
   const initialGreeting = [{ message: "Olá, Como posso te ajudar" }];
@@ -30,10 +31,11 @@ export default function ChatBot() {
 
   return (
     <div className={styles.chatbot}>
-      <header>
-        <img src="/bot-assistent.png" alt="bot logo" height={200} width={200} />
+      <Header />
+      <div className={styles.logo}>
+        <img src="/bot-assistent.png" alt="bot logo" height={120} width={120} />
         <h2 className="title">ChatBot</h2>
-      </header>
+      </div>
       <div className={styles.chat_message}>
       {messages.length > 0 &&
           messages.map((data, index) => <ChatMessage

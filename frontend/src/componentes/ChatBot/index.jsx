@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { analyze } from "../../utils/scripts";
+import { analyze } from "../../utils/analyze";
 import { Button } from "react-bootstrap";
 import styles from "./ChatBot.module.css";
 import ChatMessage from "../ChatMessage";
@@ -36,7 +36,12 @@ export default function ChatBot() {
       </header>
       <div className={styles.chat_message}>
       {messages.length > 0 &&
-          messages.map((data, index) => <ChatMessage message={data.message} user={data.user} key={index}/>
+          messages.map((data, index) => <ChatMessage
+    message={data.message}
+    user={data.user}
+    options={data.options} // Adicione a prop "options"
+    key={index}
+  />
           )}
       <div className="d-flex mt-2">
         <input

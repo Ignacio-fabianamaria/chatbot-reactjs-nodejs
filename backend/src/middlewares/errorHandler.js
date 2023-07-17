@@ -6,7 +6,7 @@ const errorHandler = (err, req, res, next) => {
   if (err instanceof SyntaxError) {
     statusCode = 400; 
   } else if (err instanceof NotFoundError) {
-    statusCode = 404; // Not Found
+    statusCode = 404;
   }
 
   

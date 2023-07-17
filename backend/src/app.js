@@ -11,7 +11,9 @@ app.use(cors({
 app.use(express.json());
 
 const loginRoutes = require('./routes/loginRoutes');
+const conversationRoutes = require('./routes/conversationRoutes');
 
-app.use('/login', loginRoutes)
+app.use('/login', loginRoutes);
+app.use('/conversation', conversationRoutes);
 
 module.exports = app;

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from 'prop-types';
 import styles from "./Header.module.css";
 import { requestLogin } from "../../services/requests";
 import { isAxiosError } from "axios";
@@ -6,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 
-export default function Header() {
+export default function Header({ onLoginSuccess }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [/* isLogged */, setIsLogged] = useState(false);
@@ -16,10 +17,9 @@ export default function Header() {
       await requestLogin("/login", { username, password });
       toast.success('Cadastrado com sucesso');
       setIsLogged(true);
+      onLoginSuccess(username)
       
-    } catch (error) {
-      console.log("🚀 ~ file: index.jsx:22 ~ login ~ error:", error)
-      
+    } catch (error) {      
       setIsLogged(false);
       if (isAxiosError(error)) {
         toast.error(error.response?.data.message);
@@ -62,3 +62,7 @@ export default function Header() {
     </header>
   );
 }
+
+Header.propTypes = {
+  onLoginSuccess: PropTypes.func.isRequired,
+};

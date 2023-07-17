@@ -10,6 +10,17 @@ const getUserModel = async (username) => {
   }
 };
 
+const saveConversationModel = async(userId,conversationFile) => {
+  try {
+    const query = "INSERT INTO conversations (user_id, conversation_file) VALUES (?, ?)";
+    const [saveConversation] =  await connection.execute(query, [userId, conversationFile])
+    return saveConversation
+  } catch (error) {
+    throw error
+  }
+}
+
 module.exports = {
   getUserModel,
+  saveConversationModel
 };

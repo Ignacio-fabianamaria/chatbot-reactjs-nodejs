@@ -1,16 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import PropTypes from 'prop-types';
 import { analyze } from "../../utils/analyze";
 import { Button } from "react-bootstrap";
 import styles from "./ChatBot.module.css";
 import ChatMessage from "../ChatMessage";
-import Header from "../Header";
+import { toast } from "react-toastify";
+// import Header from "../Header";
 
-export default function ChatBot() {
-  const initialGreeting = [{ message: "Olá, Como posso te ajudar" }];
+export default function ChatBot({username}) {
   const [text, setText] = useState("");
-  const [messages, setMessages] = useState(initialGreeting);
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    if (username) {
+      setMessages([{ message: `Olá, ${username}. Como posso te ajudar?` }]);
+    }
+  }, [username]);
 
   const handleSend = () => {
+if(!username) {
+  toast.error("Por favor, faça login");
+  return
+}
+
     let list = [...messages, { message: text, user: true }];
     if (list.length > 2) {
       const reply = analyze(text);
@@ -18,7 +30,7 @@ export default function ChatBot() {
     } else {
       list = [
         ...list,
-        { message: `Olá, ${text}` },
+        { message: `Olá, ${username}` },
         { message: "Como poso te ajudar?" },
       ];
     }
@@ -29,9 +41,12 @@ export default function ChatBot() {
     }, 1);
   };
 
+
+
+
   return (
     <div className={styles.chatbot}>
-      <Header />
+      {/* <Header /> */}
       <div className={styles.logo}>
         <img src="/bot-assistent.png" alt="bot logo" height={120} width={120} />
         <h2 className="title">ChatBot</h2>
@@ -61,3 +76,7 @@ export default function ChatBot() {
     </div>
   );
 }
+
+ChatBot.propTypes = {
+  username: PropTypes.func.isRequired,
+};

@@ -11,6 +11,6 @@ CREATE TABLE users (
 );
 
 INSERT INTO users (username, password) VALUES
-  ('user1', 'password1'),
-  ('user2', 'password2'),
-  ('user3', 'password3');
+  ('user1', '$2b$10$tFehfkIC/l.ZJy38ZKGOvOhjXykPlMIP90FrYonm539Mxgh3mDTiy'),
+  ('user2', '$2b$10$MygSGEs9BYgAp5bu3r10RO2XgU8cZUZQJkSz/h3glgAQN2C11Kbpu'),
+  ('user3', '$2b$10$WsADEdE3TUo2YlcyxxS2F.bSkZzG8IIPrMaEBQl66G.virLPHmPPe');

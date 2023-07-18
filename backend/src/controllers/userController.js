@@ -16,13 +16,17 @@ const getUserController = async (req, res, next) => {
       return;
     }
 
+    const role = user.role;
+    console.log("Role do usuário:", role);
+
     const token = generateToken({
       id: user.id,
       username: user.username,
       password: user.password,
+      role: user.role,
     });
 
-    res.status(200).json({ token: token });
+    res.status(200).json({ role, token: token });
   } catch (error) {
     next(error);
   }

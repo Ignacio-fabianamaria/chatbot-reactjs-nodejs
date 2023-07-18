@@ -7,7 +7,8 @@ USE chatbotDB;
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(255) NOT NULL,
-  password VARCHAR(255) NOT NULL
+  password VARCHAR(255) NOT NULL,
+  role VARCHAR(255) NOT NULL DEFAULT 'user'
 );
 
 CREATE TABLE conversations (
@@ -19,7 +20,7 @@ CREATE TABLE conversations (
 );
 
 
-INSERT INTO users (username, password) VALUES
-  ('user1', '$2b$10$tFehfkIC/l.ZJy38ZKGOvOhjXykPlMIP90FrYonm539Mxgh3mDTiy'),
-  ('user2', '$2b$10$MygSGEs9BYgAp5bu3r10RO2XgU8cZUZQJkSz/h3glgAQN2C11Kbpu'),
-  ('user3', '$2b$10$WsADEdE3TUo2YlcyxxS2F.bSkZzG8IIPrMaEBQl66G.virLPHmPPe');
+INSERT INTO users (username, password, role) VALUES
+  ('user1', '$2b$10$tFehfkIC/l.ZJy38ZKGOvOhjXykPlMIP90FrYonm539Mxgh3mDTiy', 'admin'),
+  ('user2', '$2b$10$MygSGEs9BYgAp5bu3r10RO2XgU8cZUZQJkSz/h3glgAQN2C11Kbpu', 'user'),
+  ('user3', '$2b$10$WsADEdE3TUo2YlcyxxS2F.bSkZzG8IIPrMaEBQl66G.virLPHmPPe', 'user');

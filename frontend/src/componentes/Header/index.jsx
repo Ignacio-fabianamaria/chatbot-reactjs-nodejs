@@ -11,13 +11,27 @@ export default function Header({ onLoginSuccess }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [/* isLogged */, setIsLogged] = useState(false);
+  const [chatData, setChatData] = useState(""); // Estado para armazenar a mensagem do chatData
+  const [chatEnabled, setChatEnabled] = useState(false);
 
   const login = async () => {
     try {
-      await requestLogin("/login", { username, password });
-      toast.success('Cadastrado com sucesso');
-      setIsLogged(true);
-      onLoginSuccess(username)
+      const data = await requestLogin("/login", { username, password });
+      console.log("Role do usuário:", data.role);
+      toast.success('Logado com sucesso');
+      
+      // Verificar o papel do usuário
+      if (data.role === 'user') {
+        // Habilitar o chat
+        setChatEnabled(false);
+        setIsLogged(true);
+        onLoginSuccess(username)
+      } else if (data.role === 'admin') {
+        setChatData('Olá Admin!');
+        setChatEnabled(true)
+        setIsLogged(false);
+        console.log(chatData);
+      }
       
     } catch (error) {      
       setIsLogged(false);
@@ -58,6 +72,7 @@ export default function Header({ onLoginSuccess }) {
           Login
         </button>
       </form>
+      {chatEnabled && <span>{chatData}</span>} {/* Exibir o chatData se o chat estiver habilitado */}
       <ToastContainer position="top-right" />
     </header>
   );

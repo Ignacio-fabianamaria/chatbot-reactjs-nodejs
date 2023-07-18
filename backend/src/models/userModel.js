@@ -37,8 +37,33 @@ const getChatDataCSVModel = async(userId)=>{
   }
 }
 
+const getAllChatDataCSVModel = async()=>{
+  try {
+    const query = 'SELECT * FROM conversations';
+    const [rows] = await connection.execute(query);
+    if (rows.length === 0) {
+      return null;
+    }
+    const chatAllData = rows.map(row => {
+      const conversationFileBuffer = row.conversation_file;
+      const conversationFileString = conversationFileBuffer.toString('utf8');
+      return {
+        id: row.id,
+        user_id: row.user_id,
+        conversation_file: conversationFileString,
+        created_at: row.created_at
+      };
+    });
+    return chatAllData;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
 module.exports = {
   getUserModel,
   saveConversationModel,
   getChatDataCSVModel,
+  getAllChatDataCSVModel,
 };

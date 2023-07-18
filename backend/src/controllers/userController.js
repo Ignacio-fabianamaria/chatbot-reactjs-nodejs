@@ -77,10 +77,24 @@ const getChatDataCSVController = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+}
+  const getAllChatDataController = async(req, res, next)=>{
+    try {
+      const chatAllData = await userService.getAllChatDataCSVService();
+      if (!chatAllData) {
+        res.status(404).json({ error: "CSV not found" });
+        return;
+      }
+      res.attachment("conversations.csv");
+      res.send(chatAllData);
+    } catch (error) {
+      next(error);
+  }
 };
 
 module.exports = {
   getUserController,
   saveConversationController,
   getChatDataCSVController,
+  getAllChatDataController,
 };

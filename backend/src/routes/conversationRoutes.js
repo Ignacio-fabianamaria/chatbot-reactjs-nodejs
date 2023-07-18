@@ -9,6 +9,7 @@ const router = express.Router()
 
 router.post('/', authenticateToken, errorHandler,  userController.saveConversationController);
 router.get('/csv', authenticateToken, errorHandler, userController.getChatDataCSVController);
+router.get('/datacsv', errorHandler, userController.getAllChatDataController)
 
 
 module.exports = router

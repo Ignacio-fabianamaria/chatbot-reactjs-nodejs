@@ -27,8 +27,18 @@ const saveConversationService = async (userId, conversationData) => {
     }
   }
 
+  const getAllChatDataCSVService = async()=>{
+    try {
+      const chatAllData = await userModel.getAllChatDataCSVModel();
+      return chatAllData
+    } catch (error) {
+      throw error
+    }
+  }
+
 module.exports = {
     getUserService,
     saveConversationService,
     getChatDataCSVService,
+    getAllChatDataCSVService
   };

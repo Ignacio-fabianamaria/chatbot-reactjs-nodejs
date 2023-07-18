@@ -7,7 +7,8 @@ const {authenticateToken} = require('../middlewares/authenticateToken');
 const router = express.Router()
 
 
-router.post('/', authenticateToken, errorHandler,  userController.saveConversationController)
+router.post('/', authenticateToken, errorHandler,  userController.saveConversationController);
+router.get('/csv', authenticateToken, errorHandler, userController.getChatDataCSVController);
 
 
 module.exports = router

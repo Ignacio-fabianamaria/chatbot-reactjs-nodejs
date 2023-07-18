@@ -2,15 +2,16 @@ import PropTypes from "prop-types";
 import styles from "./ChatMessage.module.css";
 import { ChatDots, Person } from "react-bootstrap-icons";
 import { useEffect, useState } from "react";
-// import { saveChatToCSV } from "../../utils/saveChatToCSV";
-import { requestConversation } from "../../services/requests";
+import { FileEarmark } from 'react-bootstrap-icons';
+import { requestChatCsv, requestConversation } from "../../services/requests";
 import { ToastContainer, toast } from "react-toastify";
 import { isAxiosError } from "axios";
-
 
 export default function ChatMessage(props) {
   const [buttonResult, setButtonResult] = useState("");
   const [chatData, setChatData] = useState([]);
+  const [showCSVButton, setShowCSVButton] = useState(false)
+  const [isExportDisabled, setExportDisabled] = useState(true);
 
   const handleButtonClick = async (buttonId) => {
     try {
@@ -27,9 +28,12 @@ export default function ChatMessage(props) {
       } else if (buttonId === "nao") {
         result = "Em que posso te ajudar?";
         setButtonResult(result);
+        setShowCSVButton(false);
       } else if (buttonId === "sim") {
         result = "Obrigado por nos contactar. Volte sempre!";
         setButtonResult(result);
+        setShowCSVButton(true);
+        setExportDisabled(false);
         
       }
       const updatedChatData = [
@@ -37,22 +41,60 @@ export default function ChatMessage(props) {
         { user: props.user, message: props.messages },
       ];
       setChatData(updatedChatData);
-      console.log("🚀 ~ file: index.jsx:40 ~ handleButtonClick ~ updatedChatData:", updatedChatData)
-
-      await requestConversation('/conversation', { conversationData: updatedChatData });
-      toast.success('Chat cadastrado com sucesso');
-
+      await requestConversation("/conversation", {
+        conversationData: updatedChatData,
+      });
+      toast.success("Chat cadastrado com sucesso");
 
       const buttonParent = document.getElementById(buttonId).parentNode;
       buttonParent.scrollIntoView({ behavior: "smooth" });
     } catch (error) {
-      console.log('Error:', error); 
+      console.log("Error:", error);
       if (isAxiosError(error)) {
         toast.error(error.response?.data.message);
-        console.log('Toast error'); 
+        console.log("Toast error");
       } else {
         toast.error(error.message);
-        console.log('Toast error');
+        console.log("Toast error");
+      }
+    }
+  };
+
+  const handleExportCSV = async () => {
+    try {
+      const data = await requestChatCsv("/conversation/csv");
+      const conversationData = data.conversationData;
+  
+      // header - CSV
+      let csvContent = "User,Message\n";
+  
+      // rows - CSV
+      conversationData.forEach((conversation) => {
+        conversation.message.forEach((message) => {
+          const { message: text, user } = message;
+          const formattedText = text.replace(/\n/g, " "); // Remover quebras de linha
+          const row = `${formattedText},${user ? "User" : ""}\n`;
+          csvContent += row;
+        });
+      });
+  
+      // link - download do CSV
+      const encodedUri = "data:text/csv;charset=utf-8," + encodeURIComponent(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "conversation.csv");
+      document.body.appendChild(link);
+      link.click();
+
+      toast.success("CSV exportado com sucesso");
+    } catch (error) {
+      console.log("Error:", error);
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+        console.log("Toast error");
+      } else {
+        toast.error(error.message);
+        console.log("Toast error");
       }
     }
   };
@@ -126,6 +168,20 @@ export default function ChatMessage(props) {
           {buttonResult && (
             <div className={styles.message_text}>{buttonResult}</div>
           )}
+         {buttonResult && showCSVButton && (
+            <div className={styles.message_text}>
+                <button
+                  type="button"
+                  onClick={handleExportCSV}
+                  disabled={isExportDisabled}
+                  className="btn btn-link"
+                >
+                  conversation.csv
+                <FileEarmark className={styles.fileIcon} />
+                </button>
+
+              </div>
+         )}
           <ToastContainer position="top-right" />
         </span>
       )}

@@ -16,26 +16,25 @@ export default function ChatBot({username}) {
     }
   }, [username]);
 
-  const handleSend = () => {
+  const handleSend = async() => {
 if(!username) {
   toast.error("Por favor, faça login");
   return
 }
 
-    let list = [...messages, { message: text, user: true }];
-    console.log("🚀 ~ file: index.jsx:27 ~ handleSend ~ list:", list)
-    if (list.length > 2) {
-      const reply = analyze(text);
-      list = [...list, { message: reply }];
-    } else {
-      list = [
-        ...list,
-        { message: `Olá, ${username}` },
-        { message: "Como poso te ajudar?" },
-      ];
-    }
-    setMessages(list);
-    setText('');
+const userMessage = { message: text, user: true };
+const updatedMessages = [...messages, userMessage];
+setMessages(updatedMessages);
+setText('');
+
+try {
+  const response = await analyze(text); 
+  const botMessage = { message: response, user: false };
+  setMessages([...updatedMessages, botMessage]);
+} catch (error) {
+  console.error(error);
+}
+
     setTimeout(() => {
       document.querySelectorAll("#copyright").scrollIntoView();
     }, 1);

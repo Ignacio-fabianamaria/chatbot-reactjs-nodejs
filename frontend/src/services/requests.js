@@ -26,8 +26,18 @@ export const requestConversation = async (endpoint, conversationData) => {
     return data;
   } catch (error) {
     console.error('Failed to post conversation:', error);
-    throw new Error('Erro ao processar a solicitação de conversação'); // Exceção personalizada
+    throw new Error('Erro ao processar a solicitação de conversação');
 
   }
 };
+export const requestChatCsv = async (endpoint)=>{
+  try {
+    const token = localStorage.getItem('token');
+    const {data} = await api.get(endpoint, { headers: { Authorization: token } } );
+    return data;
+  } catch (error) {
+    console.log('Status do erro:', error.response.status);
+    throw new Error('Erro ao processar a solicitação de conversação')
+  }
+}
 

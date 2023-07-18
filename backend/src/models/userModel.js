@@ -22,7 +22,23 @@ const saveConversationModel = async (userId, conversationData) => {
   }
 }
 
+const getChatDataCSVModel = async(userId)=>{
+  try {
+    const query = 'SELECT conversation_file FROM conversations WHERE user_id = ?';
+    const [rows] = await connection.execute(query, [userId]);
+    if (rows.length === 0) {
+      return null;
+    }
+    const csvData = rows[0].conversation_file;
+
+    return csvData;
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   getUserModel,
-  saveConversationModel
+  saveConversationModel,
+  getChatDataCSVModel,
 };

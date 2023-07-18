@@ -12,15 +12,15 @@ const generateToken = (payload) =>
   jwt.sign(payload, jwtSecret, jwtConfig);
 
 const authenticateToken = (req, res,next) => {
-    const token = req.headers.authorization;
+    const {authorization} = req.headers;
 
-    if(!token) {
-        return res.status(401).json({error: "Unauthorized"})
+    if(!authorization) {
+        return res.status(401).json({ message: 'Token not found' })
     }
     
-    jwt.verify(token, jwtSecret, (err, user) => {
+    jwt.verify(authorization, jwtSecret, (err, user) => {
         if(err){
-            return res.status(401).json({error: "Invalid token"})
+            return res.status(401).json({message: 'Token must be a valid token' })
         }
      req.user = user;
      next();   

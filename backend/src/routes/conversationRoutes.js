@@ -7,7 +7,7 @@ const {authenticateToken} = require('../middlewares/authenticateToken');
 const router = express.Router()
 
 
-router.post('/', errorHandler, authenticateToken,  userController.saveConversationController)
+router.post('/', authenticateToken, errorHandler,  userController.saveConversationController)
 
 
 module.exports = router

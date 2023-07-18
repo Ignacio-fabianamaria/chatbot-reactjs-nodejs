@@ -5,12 +5,11 @@ import { Button } from "react-bootstrap";
 import styles from "./ChatBot.module.css";
 import ChatMessage from "../ChatMessage";
 import { toast } from "react-toastify";
-// import Header from "../Header";
 
 export default function ChatBot({username}) {
   const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);
-
+  
   useEffect(() => {
     if (username) {
       setMessages([{ message: `Olá, ${username}. Como posso te ajudar?` }]);
@@ -24,6 +23,7 @@ if(!username) {
 }
 
     let list = [...messages, { message: text, user: true }];
+    console.log("🚀 ~ file: index.jsx:27 ~ handleSend ~ list:", list)
     if (list.length > 2) {
       const reply = analyze(text);
       list = [...list, { message: reply }];
@@ -41,9 +41,6 @@ if(!username) {
     }, 1);
   };
 
-
-
-
   return (
     <div className={styles.chatbot}>
       {/* <Header /> */}
@@ -56,7 +53,8 @@ if(!username) {
           messages.map((data, index) => <ChatMessage
     message={data.message}
     user={data.user}
-    options={data.options} // Adicione a prop "options"
+    options={data.options}
+    messages={messages}
     key={index}
   />
           )}

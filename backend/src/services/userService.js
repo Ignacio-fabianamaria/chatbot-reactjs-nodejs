@@ -9,14 +9,15 @@ const getUserService = async(username) =>{
     }
 };
 
-const saveConversationService = async(userId, conversationFile) => {
+const saveConversationService = async (userId, conversationData) => {
     try {
-        const saveConversation = await userModel.saveConversationModel(userId, conversationFile)
-        return saveConversation
+      const saveConversation = await userModel.saveConversationModel(userId, conversationData);
+      return saveConversation;
     } catch (error) {
-        throw error
+      throw error;
     }
-}
+  }
+  
 
 module.exports = {
     getUserService,

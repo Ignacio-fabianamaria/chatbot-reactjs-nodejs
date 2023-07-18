@@ -10,13 +10,15 @@ const getUserModel = async (username) => {
   }
 };
 
-const saveConversationModel = async(userId,conversationFile) => {
+const saveConversationModel = async (userId, conversationData) => {
   try {
+    const serializedConversation = JSON.stringify(conversationData);
     const query = "INSERT INTO conversations (user_id, conversation_file) VALUES (?, ?)";
-    const [saveConversation] =  await connection.execute(query, [userId, conversationFile])
-    return saveConversation
+    const [saveConversation] = await connection.execute(query, [userId, serializedConversation]);
+
+    return saveConversation;
   } catch (error) {
-    throw error
+    throw error;
   }
 }
 

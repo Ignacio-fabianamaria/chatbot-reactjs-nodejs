@@ -15,7 +15,7 @@ export const analyze = (text) => {
   } else if (text.includes('interest')) {
     return 'A taxa de juros do banco é de 8.7';
   } else if (toClose.includes(lowerText)) {
-    return 'Deseja sair?  1️⃣-Sim  ou 2️⃣-Não';
+    return 'Deseja sair?';
   } else if (lowerText === '1' || lowerText === 'encerrar conversa') {
     return 'Obrigada por nos contactar! Tenha um bom dia!';
   } else if (lowerText === '2' || lowerText === 'continuar') {

@@ -4,6 +4,7 @@ import styles from "./Header.module.css";
 import { requestLogin, requestAllDataCSV } from "../../services/requests";
 import { isAxiosError } from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import { FileEarmarkText } from 'react-bootstrap-icons';
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Header({ onLoginSuccess }) {
@@ -41,6 +42,10 @@ export default function Header({ onLoginSuccess }) {
         toast.error("Ocorreu um erro durante o login.");
       }
     }
+  };
+
+  const handleRefresh = () => {
+    window.location.reload(); // Esta função irá recarregar a página
   };
 
   const handleDataCsvBtn = async () => {
@@ -106,14 +111,19 @@ export default function Header({ onLoginSuccess }) {
         <button type="button" className="btn btn-primary" onClick={login}>
           Login
         </button>
+        <button type="button"  className="btn btn-primary" onClick={handleRefresh}>
+            Sair
+          </button>
       </form>
       {chatEnabled && (
         <>
           <span>{chatData}</span>
-          <button type="button" onClick={handleDataCsvBtn}>
+          <button type="button" className="btn btn-link" onClick={handleDataCsvBtn}>
             data.csv
+            <FileEarmarkText size={17} />
           </button>
         </>
+        
       )}
       <ToastContainer position="top-right" />
     </header>

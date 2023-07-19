@@ -6,24 +6,27 @@ import { FileEarmark } from 'react-bootstrap-icons';
 import { requestChatCsv, requestConversation } from "../../services/requests";
 import { ToastContainer, toast } from "react-toastify";
 import { isAxiosError } from "axios";
+import { applyForLoan, help, loanConditions, moreInformations } from "../../utils/loanOptions";
 
 export default function ChatMessage(props) {
   const [buttonResult, setButtonResult] = useState("");
   const [chatData, setChatData] = useState([]);
-  const [showCSVButton, setShowCSVButton] = useState(false)
+  const [showCSVButton, setShowCSVButton] = useState(false);
+  const [currentButtonId, setCurrentButtonId] = useState("");
   const [isExportDisabled, setExportDisabled] = useState(true);
 
   const handleButtonClick = async (buttonId) => {
     try {
       let result;
+      setCurrentButtonId(buttonId);
       if (buttonId === "solicitar_emprestimo") {
-        result = "Você solicitou um empréstimo";
+        result = applyForLoan;
         setButtonResult(result);
       } else if (buttonId === "condicoes_emprestimo") {
-        result = "Você solicitou condições de empréstimo";
+        result = loanConditions;
         setButtonResult(result);
       } else if (buttonId === "ajuda") {
-        result = "Você solicitou ajuda";
+        result = help;
         setButtonResult(result);
       } else if (buttonId === "nao") {
         result = "Em que posso te ajudar?";
@@ -44,8 +47,6 @@ export default function ChatMessage(props) {
       await requestConversation("/conversation", {
         conversationData: updatedChatData,
       });
-      toast.success("Chat cadastrado com sucesso");
-
       const buttonParent = document.getElementById(buttonId).parentNode;
       buttonParent.scrollIntoView({ behavior: "smooth" });
     } catch (error) {
@@ -166,7 +167,26 @@ export default function ChatMessage(props) {
             <span className={styles.message_text}>{props.message}</span>
           )}
           {buttonResult && (
-            <div className={styles.message_text}>{buttonResult}</div>
+            <div className={styles.message_text}>
+              {Array.isArray(buttonResult) ? (
+                buttonResult.map((text, index) => (
+                  <div key={index}>{text}</div>
+                ))
+              ) : (
+                <div>{buttonResult}</div>
+              )}
+              {moreInformations[currentButtonId] && (
+                <div>
+                  <a
+                    href={moreInformations[currentButtonId]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Mais informações
+                  </a>
+                </div>
+              )}
+            </div>
           )}
          {buttonResult && showCSVButton && (
             <div className={styles.message_text}>

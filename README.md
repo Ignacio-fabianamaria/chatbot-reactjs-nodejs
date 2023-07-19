@@ -9,7 +9,7 @@
 ##
 
 ## :memo: Descrição
-<p> O chatBot é uma aplicação full-stack desenvolvida em ReactJS, Node.js e MySQL para fornecer informações sobre data, hora e informações sobre empréstimos de forma rápida e eficiente. A aplicação é acessível apenas para usuários cadastrados no banco de dados.</p>
+<p> O ChatBot é uma aplicação full-stack desenvolvida em ReactJS, Node.js e MySQL para fornecer informações sobre data, hora e informações sobre empréstimos de forma rápida e eficiente. A aplicação é acessível apenas para usuários cadastrados no banco de dados.</p>
 <p>Quando os usuários finalizam suas conversas com o ChatBot, eles têm a opção de exportar todo o conteúdo da conversa em um arquivo CSV. Essa funcionalidade permite que os usuários mantenham um registro pessoal das interações e informações fornecidas pelo ChatBot.</p>
 <p>Além disso,  os usuários com permissões de administrador têm acesso a uma funcionalidade especial: eles podem exportar todos os históricos de conversas que estão armazenados no banco de dados. Essa funcionalidade é valiosa para realizar análises detalhadas.</p>
 
@@ -20,6 +20,81 @@
 - Informações sobre Emprestimos
 - Exportação em arquivo .csv da Conversa do usuário 
 - Exportação de Históricos de Conversas (Funcionalidade Administrativa)
+
+## 💬 ChatBot
+<p>O bot é capaz de interpretar determinadas palavras e frases que foram previamente definidas em scripts. Com esses scripts, o chatbot deve ser capaz de interpretar termos tanto em português quanto em inglês para iniciar uma conversa, encerrar uma conversa e para finalizar e salvar a conversa. </p>
+
+<details>
+  
+```js
+//frontend/src/utils/script.js.
+
+export const greetings = [
+    "olá",
+    "oi",
+    "oi, tudo bem?",
+    "e aí?",
+    "bom dia",
+    "boa tarde",
+    "boa noite",
+    "bom",
+    "eu quero",
+    "good",
+    "I want",
+    "hello",
+    "hi",
+    "hey",
+    "good morning",
+    "good afternoon",
+    "good evening",
+];
+
+export const ends = [
+    "até logo",
+    "tchau",
+    "até mais",
+    "até breve",
+    "tenha um bom dia",
+    "tenha uma boa tarde",
+    "tenha uma boa noite",
+    "adeus",
+    "goodbye",
+    "bye",
+    "see you later",
+    "take care",
+    "have a great day",
+    "have a nice evening",
+    "farewell",
+    "obrigado",
+    "obrigada",
+    "muito obrigado",
+    "muito obrigada",
+    "agradecido",
+    "agradecida",
+    "thanks",
+    "thank you",
+    "thank you so much",
+    "thanks a lot",
+    "i appreciate it",
+    "grateful"
+];
+
+export const toClose = [
+    "não",
+    "sair",
+    "não quero",
+    "não quero mais nada",
+    "quero sair",
+    "encerrar",
+    "no",
+    "don't",
+    "exit",
+    "quit"
+  ];
+ 
+```  
+</details>
+
 
 ##  💻 Instalação
 - Certifique-se de ter o Node.js instalado em seu sistema.

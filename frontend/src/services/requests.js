@@ -41,3 +41,13 @@ export const requestChatCsv = async (endpoint)=>{
   }
 }
 
+export const requestAllDataCSV = async (endpoint)=>{
+  try {
+    
+    const {data} = await api.get(endpoint);
+    return data;
+  } catch (error) {
+    console.log('Status do erro:', error.response.status);
+    throw new Error('Erro ao processar a solicitação de conversação')
+  }
+}
